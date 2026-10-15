@@ -72,8 +72,8 @@ const Skiper49 = () => {
   ];
 
   return (
-    <div className="flex h-full w-full items-center justify-center overflow-hidden bg-[#f5f4f3] py-10 sm:py-14">
-      <Carousel_003 className="" images={images} showPagination loop />
+    <div className="flex h-full w-full items-center justify-center overflow-hidden bg-transparent py-10 sm:py-14">
+      <Carousel_003 className="" images={images} showPagination loop autoplay={true} />
     </div>
   );
 };
@@ -86,7 +86,7 @@ const Carousel_003 = ({
   showPagination = false,
   showNavigation = false,
   loop = true,
-  autoplay = false,
+  autoplay = true,
   spaceBetween = 0,
 }: {
   images: { src: string; alt: string }[];
@@ -109,26 +109,37 @@ const Carousel_003 = ({
     background-size: cover;
     width: 300px;
     height: 320px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    border: 1px solid rgba(201, 166, 107, 0.35);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.75), 0 0 25px rgba(201, 166, 107, 0.12);
+    transition: transform 0.4s ease, border-color 0.4s ease;
+  }
+
+  .Carousal_003 .swiper-slide-active {
+    border-color: rgba(224, 195, 139, 0.65);
+    box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.85), 0 0 35px rgba(201, 166, 107, 0.25);
   }
 
   .Carousal_003 .swiper-pagination {
-    bottom: 0px !important;
+    bottom: 4px !important;
   }
 
   .Carousal_003 .swiper-pagination-bullet {
-    background-color: #000 !important;
-    width: 8px;
-    height: 8px;
-    margin: 0 4px !important;
-    opacity: 0.25;
-    transition: all 0.2s ease;
+    background-color: #D8D1C5 !important;
+    width: 7px;
+    height: 7px;
+    margin: 0 5px !important;
+    opacity: 0.35;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .Carousal_003 .swiper-pagination-bullet-active {
     opacity: 1 !important;
-    background-color: #000 !important;
-    transform: scale(1.15);
+    background-color: #C9A66B !important;
+    width: 24px;
+    border-radius: 9999px;
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(201, 166, 107, 0.6);
   }
 `;
 
@@ -155,20 +166,22 @@ const Carousel_003 = ({
           autoplay={
             autoplay
               ? {
-                  delay: 1500,
-                  disableOnInteraction: true,
+                  delay: 2800,
+                  disableOnInteraction: false,
+                  pauseOnMouseEnter: true,
                 }
               : false
           }
+          speed={750}
           effect="coverflow"
           grabCursor={true}
           slidesPerView="auto"
           centeredSlides={true}
           loop={loop}
           coverflowEffect={{
-            rotate: 40,
+            rotate: 35,
             stretch: 0,
-            depth: 100,
+            depth: 120,
             modifier: 1,
             slideShadows: true,
           }}

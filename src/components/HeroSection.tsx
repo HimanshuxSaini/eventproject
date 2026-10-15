@@ -49,7 +49,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onPlanClick, onExplore
               onClick={onExploreClick}
               className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-xs sm:text-sm font-semibold tracking-widest uppercase text-[#F7F3EB] bg-[#24262B]/80 hover:bg-[#24262B] border border-[#C9A66B]/30 hover:border-[#C9A66B] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
             >
-              <span>Explore Our Work</span>
+              <span>Explore Our Process</span>
             </button>
           </div>
         </div>

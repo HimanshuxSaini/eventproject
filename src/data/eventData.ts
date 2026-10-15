@@ -1,4 +1,4 @@
-import { ServiceItem, PortfolioItem, TimelineStep, NCRLocation, TestimonialItem } from '../types';
+import { ServiceItem, PortfolioItem, TimelineStep, DetailedProcessPhase, RunOfShowItem, NCRLocation, TestimonialItem } from '../types';
 
 export const BRAND_CONFIG = {
   name: 'MIDNIGHT LUXE',
@@ -319,4 +319,219 @@ export const STATS_DATA = [
   { label: 'Years of Experience', value: 14, suffix: '+', note: 'Production heritage' },
   { label: 'NCR Cities Covered', value: 5, suffix: ' Regions', note: 'Delhi, Gurugram, Noida, etc.' },
   { label: 'Curated Vendor Network', value: 120, suffix: '+', note: 'Acoustics, florals, staging' },
+];
+
+export const DETAILED_PROCESS_PHASES: DetailedProcessPhase[] = [
+  {
+    id: 'phase-1',
+    number: '01',
+    phase: 'INTAKE & SCOPE',
+    title: 'Creative Intake & Feasibility',
+    subtitle: 'Decoding your expectations, guest flow, and architectural parameters.',
+    duration: 'Weeks 1 – 2',
+    description: 'Every extraordinary production begins with active listening. We dive deep into your creative vision, guest demographics, VIP protocols, spatial needs across Delhi NCR venues, and investment frameworks to establish an airtight production foundation.',
+    keyDeliverables: [
+      'Architectural Feasibility & Venue Sightline Audit',
+      'Delhi NCR Regulatory & Sound Permitting Roadmap',
+      'Line-Item Financial Allocation Model & Contingency Plan',
+      'Preliminary Production Charter & Milestone Calendar'
+    ],
+    workflowItems: [
+      {
+        title: 'Creative Discovery Session',
+        desc: 'One-on-one consultation with our Senior Creative Director to translate aesthetic aspirations into tangible design briefs.'
+      },
+      {
+        title: 'Technical Site Inspection',
+        desc: 'Laser measurements, electrical load verification, acoustic baseline checks, and vehicular loading dock access analysis.'
+      },
+      {
+        title: 'Risk & Permitting Matrix',
+        desc: 'Direct liaison with local Delhi NCR authorities for decibel compliance, fire safety, and VIP security logistics.'
+      }
+    ],
+    milestoneQuote: 'True luxury is born when creative ambition is anchored in structural certainty.',
+    imageUrl: 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1200&q=80',
+    statBadge: { value: '100%', label: 'Feasibility Certainty' }
+  },
+  {
+    id: 'phase-2',
+    number: '02',
+    phase: 'SCENOGRAPHY & 3D',
+    title: 'Spatial Scenography & 3D Modeling',
+    subtitle: 'Step inside your event before a single truss is raised.',
+    duration: 'Weeks 3 – 5',
+    description: 'Our in-house 3D design team constructs millimetrically accurate digital twins of your event spaces. You will preview dynamic kinetic lighting cues, custom floral canopies, bespoke stage geometry, and patron sightlines in photorealistic detail.',
+    keyDeliverables: [
+      'Photorealistic 4K 3D Walkthrough Renders',
+      'Custom Stage, Mandap & Scenic Truss Blueprint',
+      'DMX Architectural Lighting Plot & Color Grading Palette',
+      'Tactile Material Boards: Fabrics, Glassware, Florals & Finishes'
+    ],
+    workflowItems: [
+      {
+        title: '3D Spatial Modeling',
+        desc: 'Simulating seating clusters, camera angles, sightline clearances, and stage reveals down to the centimeter.'
+      },
+      {
+        title: 'Physical Sensory Sampling',
+        desc: 'Hands-on presentation of luxury velvet textures, charger plate weights, crystal stems, and live botanical arrangements.'
+      },
+      {
+        title: 'Acoustic Sound Mapping',
+        desc: 'Directional speaker plotting to ensure crisp keynote clarity and immersive dance floors with zero sound spillage.'
+      }
+    ],
+    milestoneQuote: 'What you experience in our 3D visualization is identical to the reality on event evening.',
+    imageUrl: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80',
+    statBadge: { value: '1:1', label: 'Render-to-Reality Match' }
+  },
+  {
+    id: 'phase-3',
+    number: '03',
+    phase: 'CURATION & ENGINEERING',
+    title: 'Vendor Curation & Technical Orchestration',
+    subtitle: 'Assembling master artisans, Michelin-level catering, and specialized crews.',
+    duration: 'Weeks 6 – 9',
+    description: 'We orchestrate over 120 vetted elite partners across culinary masters, headline entertainment, audiovisual engineers, and white-glove hospitality specialists. We bind every contributor into a unified, synchronized production ecosystem.',
+    keyDeliverables: [
+      'Master Technical Production & Rigging Rider',
+      'Bespoke Culinary Menus & Sommelier Wine Pairings',
+      'Headline Artist Hospitality & Technical Rider Fulfillment',
+      'Minute-by-Minute Run-of-Show Master Timetable'
+    ],
+    workflowItems: [
+      {
+        title: 'Curated Tasting Sessions',
+        desc: 'Private multi-course tastings with executive master chefs to tailor flavors, dietary accommodations, and theatrical service.'
+      },
+      {
+        title: 'Talent & Artist Logistics',
+        desc: 'Direct rider negotiations, green-room specifications, transit coordination, and backstage security protocols.'
+      },
+      {
+        title: 'Technical Integration Briefing',
+        desc: 'Synchronizing lighting directors, audio engineers, video switchers, and pyrotechnic teams under unified show control.'
+      }
+    ],
+    milestoneQuote: 'A master ensemble is only as magnificent as the invisible conductor keeping every beat in flawless time.',
+    imageUrl: 'https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80',
+    statBadge: { value: '120+', label: 'Vetted Partners' }
+  },
+  {
+    id: 'phase-4',
+    number: '04',
+    phase: 'LIVE SHOW COMMAND',
+    title: 'On-Site Production & Show Command',
+    subtitle: 'Military logistical rigor executed with effortless white-glove grace.',
+    duration: 'Production Week & Event Day',
+    description: 'From the initial 48-hour structural load-in through the final encore, our senior Command Team takes charge on site. We manage load-in safety, cue-to-cue rehearsals, VIP reception, and stage transitions with calm, discreet authority.',
+    keyDeliverables: [
+      'Centralized Production Control Room (PCR)',
+      'Dedicated Stage Manager & Show Cue Director',
+      'Discreet Headset-Linked Backstage Crew',
+      'Real-Time Contingency & Rapid Protocol Management'
+    ],
+    workflowItems: [
+      {
+        title: 'Structural Load-In & Verification',
+        desc: 'Rigging certification, twin generator parallel load testing, and LED tile color calibration before rehearsals.'
+      },
+      {
+        title: 'Full Cue-to-Cue Rehearsals',
+        desc: 'Complete dry runs of walk-ins, awards reveals, musical transitions, speech teleprompters, and special effects.'
+      },
+      {
+        title: 'White-Glove Guest Management',
+        desc: 'Chauffeured arrivals, seamless touchless registration, personal escort for VIPs, and concierge cloakroom care.'
+      }
+    ],
+    milestoneQuote: 'When production is truly flawless, your guests perceive only the magic — never the machinery.',
+    imageUrl: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1200&q=80',
+    statBadge: { value: '0.5s', label: 'Cue Execution Precision' }
+  },
+  {
+    id: 'phase-5',
+    number: '05',
+    phase: 'LEGACY & WRAP',
+    title: 'Wrap, Reconciliation & Media Mastering',
+    subtitle: 'Protecting your investment and preserving your memories for a lifetime.',
+    duration: 'Post-Event Weeks 1 – 2',
+    description: 'Our commitment endures well after the last guest departs. We supervise rapid, damage-free venue teardown, conduct line-item financial reconciliations with zero surprises, and deliver mastered cinematic 4K film and heirloom photo books.',
+    keyDeliverables: [
+      'Comprehensive Financial Audit & Vendor Settlement Report',
+      'Mastered 4K Color-Graded Cinematic Film & Soundscape',
+      'Curated High-Resolution Editorial Photo Library',
+      'Executive Post-Event Debrief & Retrospective'
+    ],
+    workflowItems: [
+      {
+        title: 'Immaculate Venue Handover',
+        desc: 'Immediate teardown with property management sign-off to ensure 100% security deposit recovery without dispute.'
+      },
+      {
+        title: 'Cinematic Post-Production',
+        desc: 'Colorists and sound designers edit your milestone film to high-fidelity broadcast standards.'
+      },
+      {
+        title: 'Permanent Vault Access',
+        desc: 'High-speed cloud gallery with password-protected distribution links for family, board members, or delegates.'
+      }
+    ],
+    milestoneQuote: 'We do not simply produce events; we engineer legacy moments that outlive the evening.',
+    imageUrl: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80',
+    statBadge: { value: '48h', label: 'First Media Preview' }
+  }
+];
+
+export const RUN_OF_SHOW_TIMELINE: RunOfShowItem[] = [
+  {
+    time: '08:00',
+    period: 'AM',
+    title: 'Site Ingress & Heavy Rigging',
+    description: 'Ground rigging teams secure high-capacity aluminum box trusses, secondary power generators, and acoustic insulation buffers.',
+    department: 'Technical & Engineering'
+  },
+  {
+    time: '12:30',
+    period: 'PM',
+    title: 'Floral Installations & Scenography',
+    description: 'Climate-controlled floral delivery, table dressing, bespoke centerpiece placement, and custom carpet laydowns.',
+    department: 'Decor & Styling'
+  },
+  {
+    time: '04:00',
+    period: 'PM',
+    title: 'Full Audiovisual Dress Rehearsal',
+    description: 'Stage lighting cues, wireless microphone frequency sweeps, LED wall media synchronization, and artist soundchecks.',
+    department: 'Show Direction'
+  },
+  {
+    time: '06:30',
+    period: 'PM',
+    title: 'Red Carpet Arrivals & Welcome Soiree',
+    description: 'White-glove valet concierge, chilled champagne service, acoustic background ensembles, and personalized guest greeting.',
+    department: 'Hospitality & Protocol'
+  },
+  {
+    time: '08:30',
+    period: 'PM',
+    title: 'Main Show / Milestone Ceremony',
+    description: 'Dramatically choreographed lighting transition, key speeches, award reveal or sacred pheras, and multi-camera live telecast.',
+    department: 'Live Production'
+  },
+  {
+    time: '11:00',
+    period: 'PM',
+    title: 'Celebration Soiree & Gastronomy',
+    description: 'Live headline musical performance, after-hours speakeasy lounge activation, and artisanal late-night dining.',
+    department: 'Entertainment & Catering'
+  },
+  {
+    time: '02:30',
+    period: 'AM',
+    title: 'Guest Egress & Controlled Strike',
+    description: 'Private chauffeur dispatch, discreet floral repurposing, and silent stage load-out with complete venue protection.',
+    department: 'Operations & Security'
+  }
 ];

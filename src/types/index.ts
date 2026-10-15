@@ -40,6 +40,29 @@ export interface TimelineStep {
   deliverables: string[];
 }
 
+export interface DetailedProcessPhase {
+  id: string;
+  number: string;
+  phase: string;
+  title: string;
+  subtitle: string;
+  duration: string;
+  description: string;
+  keyDeliverables: string[];
+  workflowItems: { title: string; desc: string }[];
+  milestoneQuote: string;
+  imageUrl: string;
+  statBadge: { value: string; label: string };
+}
+
+export interface RunOfShowItem {
+  time: string;
+  period: string;
+  title: string;
+  description: string;
+  department: string;
+}
+
 export interface NCRLocation {
   city: string;
   headline: string;

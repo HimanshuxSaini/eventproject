@@ -14,7 +14,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onPlanClick }) => {
   const navLinks = [
     { name: 'Home', href: '#hero', id: 'home' },
     { name: 'Services', href: '#services', id: 'services' },
-    { name: 'Portfolio', href: '#portfolio', id: 'portfolio' },
     { name: 'Process', href: '#process', id: 'process' },
     { name: 'About', href: '#about', id: 'about' },
   ];
@@ -47,7 +46,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onPlanClick }) => {
     setMobileMenuOpen(false);
     const target = document.querySelector(href);
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+      if ((window as any).lenis) {
+        (window as any).lenis.scrollTo(target, { offset: -60, duration: 1.3 });
+      } else {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 

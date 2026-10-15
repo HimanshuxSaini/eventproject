@@ -29,8 +29,11 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
           </p>
         </div>
 
-        {/* Replaced 6-card grid with Swiper Coverflow Carousel_003 (matching Reference Image 2) */}
-        <div className="rounded-3xl overflow-hidden border border-[#24262B] shadow-2xl bg-[#f5f4f3] transition-all">
+        {/* Swiper Coverflow Carousel aligned with dark luxury brand identity */}
+        <div className="relative rounded-3xl overflow-hidden border border-[#C9A66B]/30 shadow-2xl bg-[#14151b]/85 backdrop-blur-md transition-all">
+          {/* Subtle Ambient Golden Radial Glow */}
+          <div className="absolute -top-24 -left-24 w-80 h-80 bg-[#C9A66B]/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -right-24 w-80 h-80 bg-[#E0C38B]/10 rounded-full blur-3xl pointer-events-none" />
           <Skiper49 />
         </div>
 
