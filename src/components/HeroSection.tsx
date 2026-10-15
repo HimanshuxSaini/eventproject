@@ -17,6 +17,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onPlanClick, onExplore
 
       {/* Hero Content Container */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center pointer-events-none">
+        {/* Soft Localized Backdrop for text readability without dimming the 3D ballroom */}
+        <div className="absolute inset-0 max-w-3xl mx-auto rounded-full bg-radial from-[#101114]/80 via-[#101114]/35 to-transparent blur-3xl -z-10 pointer-events-none" />
+
         {/* Subtle Brand Tagline Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#101114]/70 backdrop-blur-md border border-[#C9A66B]/30 mb-8 pointer-events-auto shadow-lg animate-fade-in">
           <Sparkles className="w-3.5 h-3.5 text-[#C9A66B]" />

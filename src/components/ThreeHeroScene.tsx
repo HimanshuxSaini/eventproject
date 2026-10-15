@@ -42,7 +42,8 @@ export const ThreeHeroScene: React.FC<ThreeHeroSceneProps> = () => {
     // Scene & Camera
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x101114);
-    scene.fog = new THREE.FogExp2(0x101114, 0.035);
+    // Calibrated linear depth fog for crystal-clear foreground architecture
+    scene.fog = new THREE.Fog(0x101114, 18, 54);
 
     const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 100);
     camera.position.set(0, 2.2, 11);
@@ -56,40 +57,50 @@ export const ThreeHeroScene: React.FC<ThreeHeroSceneProps> = () => {
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.25;
+    renderer.toneMappingExposure = 1.45;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     container.appendChild(renderer.domElement);
 
-    // Procedural Floor Texture (Dark polished marble with subtle luxury veining)
+    // Procedural Floor Texture (Lacquered black marble with radiant golden veining)
     const floorCanvas = document.createElement('canvas');
     floorCanvas.width = 512;
     floorCanvas.height = 512;
     const ctx = floorCanvas.getContext('2d');
     if (ctx) {
-      ctx.fillStyle = '#16181d';
+      ctx.fillStyle = '#131418';
       ctx.fillRect(0, 0, 512, 512);
 
-      // Subtle marble veining
-      ctx.strokeStyle = 'rgba(201, 166, 107, 0.07)';
-      ctx.lineWidth = 1.5;
-      for (let i = 0; i < 8; i++) {
+      // Delicate luxury marble veining with golden champagne highlights
+      ctx.strokeStyle = 'rgba(224, 195, 139, 0.18)';
+      ctx.lineWidth = 1.8;
+      for (let i = 0; i < 9; i++) {
         ctx.beginPath();
         ctx.moveTo(Math.random() * 512, 0);
         ctx.bezierCurveTo(
-          Math.random() * 512, 170,
-          Math.random() * 512, 340,
+          Math.random() * 512, 160,
+          Math.random() * 512, 350,
           Math.random() * 512, 512
         );
         ctx.stroke();
       }
 
-      // Elegant grid border
-      ctx.strokeStyle = 'rgba(201, 166, 107, 0.15)';
-      ctx.lineWidth = 1;
-      ctx.strokeRect(4, 4, 504, 504);
+      // Fine ivory hairline veining
+      ctx.strokeStyle = 'rgba(247, 243, 235, 0.08)';
+      ctx.lineWidth = 1.0;
+      for (let i = 0; i < 6; i++) {
+        ctx.beginPath();
+        ctx.moveTo(0, Math.random() * 512);
+        ctx.bezierCurveTo(170, Math.random() * 512, 340, Math.random() * 512, 512, Math.random() * 512);
+        ctx.stroke();
+      }
+
+      // Elegant gold grid frame
+      ctx.strokeStyle = 'rgba(201, 166, 107, 0.22)';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(3, 3, 506, 506);
     }
 
     const floorTexture = new THREE.CanvasTexture(floorCanvas);
@@ -98,13 +109,16 @@ export const ThreeHeroScene: React.FC<ThreeHeroSceneProps> = () => {
     floorTexture.repeat.set(10, 10);
     floorTexture.colorSpace = THREE.SRGBColorSpace;
 
-    // Floor Mesh (Reflective ballroom stage)
+    // Floor Mesh (High-gloss reflective ballroom stage with real clearcoat mirror reflections)
     const floorGeo = new THREE.PlaneGeometry(60, 60);
-    const floorMat = new THREE.MeshStandardMaterial({
+    const floorMat = new THREE.MeshPhysicalMaterial({
       map: floorTexture,
-      roughness: 0.28,
-      metalness: 0.65,
-      color: 0x121418,
+      roughness: 0.12,
+      metalness: 0.82,
+      clearcoat: 0.85,
+      clearcoatRoughness: 0.08,
+      reflectivity: 0.92,
+      color: 0x111317,
     });
     const floor = new THREE.Mesh(floorGeo, floorMat);
     floor.rotation.x = -Math.PI / 2;
@@ -115,14 +129,14 @@ export const ThreeHeroScene: React.FC<ThreeHeroSceneProps> = () => {
     // Architectural Pillars / Archways flanking the grand ballroom
     const pillarGeo = new THREE.CylinderGeometry(0.35, 0.45, 12, 32);
     const goldPillarMat = new THREE.MeshStandardMaterial({
-      color: 0x24262b,
-      metalness: 0.85,
-      roughness: 0.35,
+      color: 0x282b32,
+      metalness: 0.9,
+      roughness: 0.25,
     });
     const goldTrimMat = new THREE.MeshStandardMaterial({
-      color: 0xc9a66b,
-      metalness: 0.95,
-      roughness: 0.18,
+      color: 0xd4af37,
+      metalness: 0.98,
+      roughness: 0.12,
     });
 
     const pillarsGroup = new THREE.Group();
@@ -167,14 +181,15 @@ export const ThreeHeroScene: React.FC<ThreeHeroSceneProps> = () => {
 
     const crystalMat = new THREE.MeshPhysicalMaterial({
       color: 0xffffff,
-      transmission: 0.92,
+      transmission: 0.96,
       opacity: 1,
       transparent: true,
-      roughness: 0.08,
-      ior: 1.55,
-      thickness: 0.5,
-      attenuationColor: new THREE.Color(0xffedd5),
-      attenuationDistance: 0.5,
+      roughness: 0.04,
+      ior: 1.62,
+      thickness: 0.75,
+      attenuationColor: new THREE.Color(0xfff0db),
+      attenuationDistance: 0.8,
+      specularIntensity: 1.0,
     });
 
     ringTiers.forEach((tier) => {
@@ -200,55 +215,70 @@ export const ThreeHeroScene: React.FC<ThreeHeroSceneProps> = () => {
     });
 
     // Central Chandelier Warm Core Light
-    const chandelierLight = new THREE.PointLight(0xffdfa9, 3.5, 18, 1.2);
+    const chandelierLight = new THREE.PointLight(0xffe2b8, 6.5, 24, 1.1);
     chandelierLight.position.set(0, 0, 0);
     chandelierLight.castShadow = true;
     chandelierLight.shadow.bias = -0.0005;
     chandelierGroup.add(chandelierLight);
 
+    // Lower crystal sparkle light
+    const sparkleLight = new THREE.PointLight(0xffdfa9, 3.0, 10, 1.5);
+    sparkleLight.position.set(0, -1.8, 0);
+    chandelierGroup.add(sparkleLight);
+
     scene.add(chandelierGroup);
 
-    // Stage Spotlights (Dramatic event cones)
-    const spotLeft = new THREE.SpotLight(0xc9a66b, 5, 25, Math.PI / 6, 0.4, 1.5);
-    spotLeft.position.set(-8, 8, 3);
+    // Stage Spotlights (Dramatic luxury golden cones)
+    const spotLeft = new THREE.SpotLight(0xd4b078, 6.5, 30, Math.PI / 5.5, 0.45, 1.4);
+    spotLeft.position.set(-8, 9, 3);
     spotLeft.target.position.set(0, -1, 0);
     scene.add(spotLeft);
     scene.add(spotLeft.target);
 
-    const spotRight = new THREE.SpotLight(0xe0c38b, 4.5, 25, Math.PI / 6, 0.4, 1.5);
-    spotRight.position.set(8, 8, 3);
+    const spotRight = new THREE.SpotLight(0xf0d5a3, 6.0, 30, Math.PI / 5.5, 0.45, 1.4);
+    spotRight.position.set(8, 9, 3);
     spotRight.target.position.set(0, -1, 0);
     scene.add(spotRight);
     scene.add(spotRight.target);
 
-    // Ambient lighting for rich shadows
-    const ambientLight = new THREE.AmbientLight(0x28231d, 1.2);
+    // Dedicated Architectural Column Rim Lights (Separating pillars from dark horizon)
+    const rimLightLeft = new THREE.DirectionalLight(0xc9a66b, 3.8);
+    rimLightLeft.position.set(-12, 12, -8);
+    scene.add(rimLightLeft);
+
+    const rimLightRight = new THREE.DirectionalLight(0xe0c38b, 3.2);
+    rimLightRight.position.set(12, 12, -8);
+    scene.add(rimLightRight);
+
+    // Warm Ambient lighting for rich specular highlights
+    const ambientLight = new THREE.AmbientLight(0x383228, 1.8);
     scene.add(ambientLight);
 
-    // Starlight Dust / Gold Bokeh Particles
-    const particleCount = 280;
+    // Starlight Dust / Radiant Gold Bokeh Particles
+    const particleCount = 320;
     const particleGeo = new THREE.BufferGeometry();
     const particlePositions = new Float32Array(particleCount * 3);
     const particleSpeeds = new Float32Array(particleCount);
 
     for (let i = 0; i < particleCount; i++) {
-      particlePositions[i * 3] = (Math.random() - 0.5) * 22;
-      particlePositions[i * 3 + 1] = Math.random() * 12 - 2;
-      particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 20;
-      particleSpeeds[i] = 0.2 + Math.random() * 0.4;
+      particlePositions[i * 3] = (Math.random() - 0.5) * 24;
+      particlePositions[i * 3 + 1] = Math.random() * 14 - 2;
+      particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 22;
+      particleSpeeds[i] = 0.25 + Math.random() * 0.45;
     }
 
     particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
 
-    // Custom circle particle texture
+    // Custom radiant bokeh circle particle texture
     const pCanvas = document.createElement('canvas');
     pCanvas.width = 64;
     pCanvas.height = 64;
     const pCtx = pCanvas.getContext('2d');
     if (pCtx) {
       const grad = pCtx.createRadialGradient(32, 32, 0, 32, 32, 30);
-      grad.addColorStop(0, 'rgba(247, 243, 235, 1)');
-      grad.addColorStop(0.3, 'rgba(201, 166, 107, 0.8)');
+      grad.addColorStop(0, 'rgba(255, 250, 240, 1)');
+      grad.addColorStop(0.25, 'rgba(240, 215, 165, 0.95)');
+      grad.addColorStop(0.65, 'rgba(201, 166, 107, 0.45)');
       grad.addColorStop(1, 'rgba(201, 166, 107, 0)');
       pCtx.fillStyle = grad;
       pCtx.beginPath();
@@ -258,10 +288,10 @@ export const ThreeHeroScene: React.FC<ThreeHeroSceneProps> = () => {
     const particleTexture = new THREE.CanvasTexture(pCanvas);
 
     const particleMat = new THREE.PointsMaterial({
-      size: 0.18,
+      size: 0.26,
       map: particleTexture,
       transparent: true,
-      opacity: 0.75,
+      opacity: 0.85,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
@@ -386,9 +416,9 @@ export const ThreeHeroScene: React.FC<ThreeHeroSceneProps> = () => {
         />
       )}
 
-      {/* Cinematic Vignette Overlay to ensure text readability */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#101114] via-[#101114]/40 to-[#101114]/70" />
-      <div className="pointer-events-none absolute inset-0 bg-radial from-transparent via-[#101114]/50 to-[#101114]/90" />
+      {/* Subtle Perimeter Vignette (Preserves 100% center stage clarity while softly blending bottom) */}
+      <div className="pointer-events-none absolute inset-0 bg-radial from-transparent via-transparent to-[#101114]/65" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#101114] to-transparent" />
     </div>
   );
 };
