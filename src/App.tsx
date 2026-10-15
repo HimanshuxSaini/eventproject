@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
+import { ThreeHeroScene } from './components/ThreeHeroScene';
 import { ServicesSection } from './components/ServicesSection';
 import { PortfolioGallery } from './components/PortfolioGallery';
 import { AboutSection } from './components/AboutSection';
@@ -47,12 +48,17 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#101114] text-[#F7F3EB] font-sans selection:bg-[#C9A66B]/30 selection:text-[#E0C38B]">
+    <div className="min-h-screen bg-[#101114] text-[#F7F3EB] font-sans selection:bg-[#C9A66B]/30 selection:text-[#E0C38B] relative">
+      {/* Global Persistent 3D Three.js Ballroom Canvas (Site-wide 3D effect) */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <ThreeHeroScene />
+      </div>
+
       {/* Navigation Bar */}
       <Navbar onPlanClick={scrollToContact} />
 
-      <main>
-        {/* Hero Section with Interactive 3D Three.js Ballroom Canvas */}
+      <main className="relative z-10">
+        {/* Hero Section with Left Content & Right 3D Chandelier Framing */}
         <HeroSection
           onPlanClick={scrollToContact}
           onExploreClick={scrollToPortfolio}

@@ -47,7 +47,7 @@ export const AboutSection: React.FC = () => {
   }, [hasAnimated]);
 
   return (
-    <section id="about" className="relative py-28 bg-[#101114] border-t border-[#24262B]">
+    <section id="about" className="relative py-28 bg-[#101114]/85 backdrop-blur-[2px] border-t border-[#24262B]/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Two-Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">

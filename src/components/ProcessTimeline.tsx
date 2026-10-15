@@ -6,7 +6,7 @@ export const ProcessTimeline: React.FC = () => {
   const [activeStepIndex, setActiveStepIndex] = useState(0);
 
   return (
-    <section id="process" className="relative py-28 bg-[#101114] border-t border-[#24262B]">
+    <section id="process" className="relative py-28 bg-[#101114]/85 backdrop-blur-[2px] border-t border-[#24262B]/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">

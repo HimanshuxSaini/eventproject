@@ -99,7 +99,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   );
 
   return (
-    <section id="contact" className="relative py-28 bg-[#101114] border-t border-[#24262B]">
+    <section id="contact" className="relative py-28 bg-[#101114]/85 backdrop-blur-[2px] border-t border-[#24262B]/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">

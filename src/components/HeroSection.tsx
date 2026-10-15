@@ -1,6 +1,5 @@
 import React from 'react';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
-import { ThreeHeroScene } from './ThreeHeroScene';
 
 interface HeroSectionProps {
   onPlanClick: () => void;
@@ -9,17 +8,13 @@ interface HeroSectionProps {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onPlanClick, onExploreClick }) => {
   return (
-    <section id="hero" className="relative w-full min-h-screen flex items-center overflow-hidden bg-[#101114]">
-      {/* 3D WebGL Ballroom / Stage Canvas */}
-      <div className="absolute inset-0 z-0">
-        <ThreeHeroScene />
-      </div>
-
-      {/* Hero Content Container - Aligned to Left Side */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-28 pb-20 pointer-events-none flex items-center">
-        <div className="max-w-2xl text-left pointer-events-auto">
+    <section id="hero" className="relative w-full min-h-screen flex items-center overflow-hidden bg-transparent">
+      {/* Hero Content Container - Balanced for Center 3D Chandelier Presence */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-32 pb-20 pointer-events-none grid grid-cols-1 lg:grid-cols-12 items-center gap-8 min-h-screen">
+        {/* Left Column: Headline, Copy & CTAs */}
+        <div className="lg:col-span-6 xl:col-span-6 text-left pointer-events-auto max-w-xl">
           {/* Soft Localized Backdrop for text readability without dimming the 3D ballroom */}
-          <div className="absolute -inset-x-8 -inset-y-12 max-w-2xl bg-radial from-[#101114]/90 via-[#101114]/40 to-transparent blur-3xl -z-10 pointer-events-none" />
+          <div className="absolute -inset-x-8 -inset-y-12 max-w-xl bg-radial from-[#101114]/85 via-[#101114]/30 to-transparent blur-3xl -z-10 pointer-events-none" />
 
           {/* Subtle Brand Tagline Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#101114]/80 backdrop-blur-md border border-[#C9A66B]/30 mb-6 sm:mb-8 shadow-lg animate-fade-in">
@@ -30,13 +25,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onPlanClick, onExplore
           </div>
 
           {/* Hero Headline */}
-          <h1 className="font-editorial text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-normal text-[#F7F3EB] leading-[1.06] tracking-tight drop-shadow-2xl">
+          <h1 className="font-editorial text-4xl sm:text-6xl md:text-7xl lg:text-[4.25rem] xl:text-[4.75rem] font-normal text-[#F7F3EB] leading-[1.06] tracking-tight drop-shadow-2xl">
             We Create Experiences <br />
             <span className="italic font-light text-[#E0C38B]">That Stay With You.</span>
           </h1>
 
           {/* Supporting Editorial Subtitle */}
-          <p className="mt-6 sm:mt-8 text-base sm:text-lg md:text-xl text-[#D8D1C5] max-w-xl font-light leading-relaxed">
+          <p className="mt-6 sm:mt-8 text-base sm:text-lg md:text-xl text-[#D8D1C5] max-w-lg font-light leading-relaxed">
             Exceptional weddings, corporate gatherings, and celebrations — thoughtfully planned and flawlessly executed across Delhi NCR.
           </p>
 
@@ -58,7 +53,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onPlanClick, onExplore
             </button>
           </div>
         </div>
+
+        {/* Right Column: Open Ballroom Stage framing the centered 3D chandelier */}
+        <div className="hidden lg:block lg:col-span-6 xl:col-span-6 pointer-events-none min-h-[460px]" />
       </div>
+
+      {/* Gentle bottom gradient transition into subsequent sections */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-[#101114]/85" />
     </section>
   );
 };

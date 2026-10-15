@@ -11,7 +11,7 @@ export const LocationsSection: React.FC<LocationsSectionProps> = ({ onSelectCity
   const [selectedLocation, setSelectedLocation] = useState<NCRLocation>(NCR_LOCATIONS[0]);
 
   return (
-    <section id="locations" className="relative py-28 bg-[#101114] border-t border-[#24262B]">
+    <section id="locations" className="relative py-28 bg-[#101114]/85 backdrop-blur-[2px] border-t border-[#24262B]/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">

@@ -15,7 +15,7 @@ export const Footer: React.FC<FooterProps> = ({ onServiceClick, onCityClick }) =
   };
 
   return (
-    <footer className="relative bg-[#101114] border-t border-[#24262B] text-[#D8D1C5] text-xs pt-20 pb-12">
+    <footer className="relative bg-[#101114]/90 backdrop-blur-[2px] border-t border-[#24262B]/50 text-[#D8D1C5] text-xs pt-20 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 pb-16 border-b border-[#24262B]">
