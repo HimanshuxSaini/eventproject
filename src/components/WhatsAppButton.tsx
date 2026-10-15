@@ -78,16 +78,13 @@ export const WhatsAppButton: React.FC = () => {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group relative flex items-center gap-2.5 px-4 py-3 rounded-full bg-[#16181d] hover:bg-[#1f2229] border border-[#C9A66B] text-[#F7F3EB] shadow-2xl hover:shadow-[#C9A66B]/20 transition-all duration-300 cursor-pointer"
+        className="group relative flex items-center justify-center p-3.5 rounded-full bg-[#16181d] hover:bg-[#1f2229] border border-[#C9A66B] text-[#F7F3EB] shadow-2xl hover:shadow-[#C9A66B]/20 transition-all duration-300 cursor-pointer"
         aria-label="Contact Concierge on WhatsApp"
       >
         <div className="relative">
           <MessageSquare className="w-5 h-5 text-[#C9A66B]" />
           <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-500 border border-[#16181d]" />
         </div>
-        <span className="hidden sm:inline-block text-xs font-semibold tracking-wider uppercase text-[#E0C38B]">
-          WhatsApp Concierge
-        </span>
       </button>
     </div>
   );
