@@ -168,15 +168,16 @@ export const ThreeHeroScene: React.FC<ThreeHeroSceneProps> = () => {
     });
     scene.add(pillarsGroup);
 
-    // Grand Tiered Chandelier (Centerpiece)
+    // Grand Tiered Chandelier (Centerpiece - Scaled for maximum prominence)
+    const isInitialDesktop = width >= 1024;
     const chandelierGroup = new THREE.Group();
-    chandelierGroup.position.set(0, 4.2, 0);
+    chandelierGroup.position.set(isInitialDesktop ? 2.4 : 0, 4.3, 0);
 
-    // Chandelier Gold Rings
+    // Chandelier Gold Rings - Expanded radius & tube for luxury presence
     const ringTiers = [
-      { radius: 2.8, tube: 0.04, y: 0 },
-      { radius: 1.9, tube: 0.04, y: -0.8 },
-      { radius: 1.0, tube: 0.035, y: -1.6 },
+      { radius: 3.4, tube: 0.05, y: 0.2 },
+      { radius: 2.3, tube: 0.045, y: -0.75 },
+      { radius: 1.35, tube: 0.038, y: -1.7 },
     ];
 
     const crystalMat = new THREE.MeshPhysicalMaterial({
@@ -186,7 +187,7 @@ export const ThreeHeroScene: React.FC<ThreeHeroSceneProps> = () => {
       transparent: true,
       roughness: 0.04,
       ior: 1.62,
-      thickness: 0.75,
+      thickness: 0.8,
       attenuationColor: new THREE.Color(0xfff0db),
       attenuationDistance: 0.8,
       specularIntensity: 1.0,
@@ -200,8 +201,8 @@ export const ThreeHeroScene: React.FC<ThreeHeroSceneProps> = () => {
       chandelierGroup.add(ring);
 
       // Cascading crystal droplets around the ring
-      const count = Math.floor(tier.radius * 24);
-      const dropletGeo = new THREE.ConeGeometry(0.04, 0.45, 6);
+      const count = Math.floor(tier.radius * 28);
+      const dropletGeo = new THREE.ConeGeometry(0.048, 0.58, 6);
       dropletGeo.rotateX(Math.PI);
 
       for (let i = 0; i < count; i++) {
@@ -209,21 +210,21 @@ export const ThreeHeroScene: React.FC<ThreeHeroSceneProps> = () => {
         const crystal = new THREE.Mesh(dropletGeo, crystalMat);
         const cx = Math.cos(angle) * tier.radius;
         const cz = Math.sin(angle) * tier.radius;
-        crystal.position.set(cx, tier.y - 0.25, cz);
+        crystal.position.set(cx, tier.y - 0.28, cz);
         chandelierGroup.add(crystal);
       }
     });
 
     // Central Chandelier Warm Core Light
-    const chandelierLight = new THREE.PointLight(0xffe2b8, 6.5, 24, 1.1);
+    const chandelierLight = new THREE.PointLight(0xffe2b8, 8.0, 28, 1.1);
     chandelierLight.position.set(0, 0, 0);
     chandelierLight.castShadow = true;
     chandelierLight.shadow.bias = -0.0005;
     chandelierGroup.add(chandelierLight);
 
     // Lower crystal sparkle light
-    const sparkleLight = new THREE.PointLight(0xffdfa9, 3.0, 10, 1.5);
-    sparkleLight.position.set(0, -1.8, 0);
+    const sparkleLight = new THREE.PointLight(0xffdfa9, 4.5, 14, 1.5);
+    sparkleLight.position.set(0, -1.9, 0);
     chandelierGroup.add(sparkleLight);
 
     scene.add(chandelierGroup);
@@ -299,24 +300,53 @@ export const ThreeHeroScene: React.FC<ThreeHeroSceneProps> = () => {
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
 
-    // Mouse movement listener for subtle parallax
+    // Mouse movement listener with heightened responsiveness for noticeable 3D depth
     const handleMouseMove = (e: MouseEvent) => {
       const normX = (e.clientX / window.innerWidth) * 2 - 1;
       const normY = -(e.clientY / window.innerHeight) * 2 + 1;
-      sceneParams.current.mouseTarget.x = normX * 0.6;
-      sceneParams.current.mouseTarget.y = normY * 0.4;
+      sceneParams.current.mouseTarget.x = normX * 1.8;
+      sceneParams.current.mouseTarget.y = normY * 1.0;
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
-    // Handle window resize
+    // Interactive pointer drag / orbit control
+    let isDragging = false;
+    let prevPointerX = 0;
+    let dragOrbitX = 0;
+
+    const handlePointerDown = (e: PointerEvent) => {
+      isDragging = true;
+      prevPointerX = e.clientX;
+    };
+
+    const handlePointerMove = (e: PointerEvent) => {
+      if (!isDragging) return;
+      const deltaX = e.clientX - prevPointerX;
+      prevPointerX = e.clientX;
+      dragOrbitX += deltaX * 0.005;
+    };
+
+    const handlePointerUp = () => {
+      isDragging = false;
+    };
+
+    container.addEventListener('pointerdown', handlePointerDown);
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', handlePointerUp);
+
+    // Handle window resize with responsive desktop offset
     const handleResize = () => {
       if (!container) return;
       const newW = container.clientWidth;
       const newH = container.clientHeight;
+      const isDesktop = newW >= 1024;
       camera.aspect = newW / newH;
       camera.updateProjectionMatrix();
       renderer.setSize(newW, newH);
+      chandelierGroup.position.x = isDesktop ? 2.4 : 0;
+      spotLeft.target.position.x = isDesktop ? 2.4 : 0;
+      spotRight.target.position.x = isDesktop ? 2.4 : 0;
     };
 
     window.addEventListener('resize', handleResize);
@@ -329,50 +359,36 @@ export const ThreeHeroScene: React.FC<ThreeHeroSceneProps> = () => {
       animationFrameId = requestAnimationFrame(animate);
       const delta = clock.getDelta();
       const elapsedTime = clock.getElapsedTime();
+      const isDesktop = (container?.clientWidth || window.innerWidth) >= 1024;
+      const focalX = isDesktop ? 2.4 : 0;
 
-      // Update Lighting Presets smoothly
-      if (sceneParams.current.preset === 'royal-gold') {
-        chandelierLight.color.setHex(0xffdfa9);
-        spotLeft.color.setHex(0xc9a66b);
-        spotRight.color.setHex(0xe0c38b);
-        spotLeft.intensity = THREE.MathUtils.damp(spotLeft.intensity, 5.0, 3, delta);
-        spotRight.intensity = THREE.MathUtils.damp(spotRight.intensity, 4.5, 3, delta);
-      } else if (sceneParams.current.preset === 'midnight-noir') {
-        chandelierLight.color.setHex(0xd8d1c5);
-        spotLeft.color.setHex(0x9aa2b0);
-        spotRight.color.setHex(0xb8c2d1);
-        spotLeft.intensity = THREE.MathUtils.damp(spotLeft.intensity, 3.2, 3, delta);
-        spotRight.intensity = THREE.MathUtils.damp(spotRight.intensity, 3.0, 3, delta);
-      } else {
-        // Starlight
-        chandelierLight.color.setHex(0xffecc7);
-        spotLeft.color.setHex(0xd1aa68);
-        spotRight.color.setHex(0xdfba7a);
-        spotLeft.intensity = THREE.MathUtils.damp(spotLeft.intensity, 6.2, 3, delta);
-        spotRight.intensity = THREE.MathUtils.damp(spotRight.intensity, 5.8, 3, delta);
-      }
+      // Noticeable continuous chandelier rotation & shimmer + interactive drag
+      chandelierGroup.rotation.y = elapsedTime * 0.09 + dragOrbitX;
+      chandelierGroup.position.y = 4.3 + Math.sin(elapsedTime * 0.6) * 0.12;
 
-      // Gentle chandelier rotation & shimmer
-      chandelierGroup.rotation.y = elapsedTime * 0.04;
-      chandelierGroup.position.y = 4.2 + Math.sin(elapsedTime * 0.5) * 0.08;
+      // Dynamic golden stage spotlights sweeping across the chandelier & floor
+      spotLeft.position.x = (isDesktop ? -4 : -8) + Math.sin(elapsedTime * 0.35) * 1.8;
+      spotRight.position.x = (isDesktop ? 9 : 8) + Math.cos(elapsedTime * 0.3) * 1.8;
+      spotLeft.target.position.set(focalX, -1, 0);
+      spotRight.target.position.set(focalX, -1, 0);
 
       // Particle drifting
       const positions = particleGeo.attributes.position.array as Float32Array;
       for (let i = 0; i < particleCount; i++) {
-        positions[i * 3 + 1] += particleSpeeds[i] * delta * 0.4;
-        if (positions[i * 3 + 1] > 9) {
+        positions[i * 3 + 1] += particleSpeeds[i] * delta * 0.45;
+        if (positions[i * 3 + 1] > 10) {
           positions[i * 3 + 1] = -2;
         }
       }
       particleGeo.attributes.position.needsUpdate = true;
 
-      // Camera motion: mouse parallax + subtle organic drift
-      const targetX = sceneParams.current.mouseTarget.x + (sceneParams.current.drift ? Math.sin(elapsedTime * 0.25) * 0.45 : 0);
-      const targetY = 2.2 + sceneParams.current.mouseTarget.y + (sceneParams.current.drift ? Math.cos(elapsedTime * 0.2) * 0.2 : 0);
+      // Camera motion: mouse parallax + subtle organic float + right-offset focus
+      const targetX = (isDesktop ? 0.6 : 0) + sceneParams.current.mouseTarget.x + (sceneParams.current.drift ? Math.sin(elapsedTime * 0.25) * 0.5 : 0);
+      const targetY = 2.2 + sceneParams.current.mouseTarget.y + (sceneParams.current.drift ? Math.cos(elapsedTime * 0.2) * 0.25 : 0);
 
       camera.position.x = THREE.MathUtils.damp(camera.position.x, targetX, 2.5, delta);
       camera.position.y = THREE.MathUtils.damp(camera.position.y, targetY, 2.5, delta);
-      camera.lookAt(0, 1.4, 0);
+      camera.lookAt(focalX, 1.4, 0);
 
       renderer.render(scene, camera);
     };
@@ -383,6 +399,9 @@ export const ThreeHeroScene: React.FC<ThreeHeroSceneProps> = () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
+      container.removeEventListener('pointerdown', handlePointerDown);
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerUp);
 
       // Clean up Three.js resources
       floorGeo.dispose();
